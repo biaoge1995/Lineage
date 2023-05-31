@@ -18,7 +18,7 @@ object TestSpark {
         .enableHiveSupport()
         .getOrCreate()
     val sql ="""
-           |create table dwd.student4 as
+           |INSERT TABLE dwd.student4
            |select student_name2,count(student_name) as cnt
            |      from
            |      (select concat(student_name,'-',b.product_Id) as student_name2,a.*
