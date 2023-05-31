@@ -67,8 +67,8 @@ class FlQueryExecutionListener extends QueryExecutionListener with Logging {
     println("|--------------------------------------------------------------|")
     columnToColumns.keySet.foreach(target=>{
       val source: mutable.Set[Column] = columnToColumns.get(target).get
-      println(s"|「target column」:\n|\t $target")
-      println(s"|「source column」:")
+      println(s"| Target Column :\n|\t $target")
+      println(s"| Source Column :")
       source.foreach(e=>println(s"|\t$e"))
       println("---------------------------------------------------------------")
     })
