@@ -63,12 +63,12 @@ class FlQueryExecutionListener extends QueryExecutionListener with Logging {
   def lineageParser(qe: QueryExecution): Unit = {
     val columnToColumns: mutable.Map[Column, mutable.Set[Column]] = lineageParserPlan(qe.analyzed)
     println("|--------------------------------------------------------------|")
-    println("|-------------------------字段血缘关系解析结果---------------------|")
+    println("|---------------column lineage parse result--------------------|")
     println("|--------------------------------------------------------------|")
     columnToColumns.keySet.foreach(target=>{
       val source: mutable.Set[Column] = columnToColumns.get(target).get
-      println(s"|【target column】:\n|\t $target")
-      println(s"|【source column】:")
+      println(s"|「target column」:\n|\t $target")
+      println(s"|「source column」:")
       source.foreach(e=>println(s"|\t$e"))
       println("---------------------------------------------------------------")
     })
