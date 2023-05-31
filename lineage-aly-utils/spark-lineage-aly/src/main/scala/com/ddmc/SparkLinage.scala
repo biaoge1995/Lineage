@@ -20,7 +20,7 @@ class SparkLinage(sparkSession: SparkSession) extends  com.ddmc.api.LineAgeAly {
 
     val newPlan = parser.parsePlan(sql)
 
-    val analyzedPlan = analyzer.executeAndCheck(newPlan)
+    val analyzedPlan = analyzer.execute(newPlan)
 
     val optimizerPlan = optimizer.execute(analyzedPlan)
     //    //得到sparkPlan
