@@ -12,14 +12,15 @@ object TestSpark {
 
   def main(args: Array[String]): Unit = {
       val sparkSession = SparkSession.builder()
-//        .config("hive.metastore.uris", "thrift://localhost:9083")
+//        .config("hive.metastore.uris", "thrift://cdh2:9083")
         .config("spark.sql.queryExecutionListeners","com.ddmc.FlQueryExecutionListener" )
 //        .master("local[*]")
         .enableHiveSupport()
         .getOrCreate()
     val sql ="""
            |INSERT overwrite TABLE dwd.student4
-           |select student_name2,count(student_name) as cnt
+           |select student_name2
+           |,count(student_name) as cnt
            |      from
            |      (select concat(student_name,'-',b.product_Id) as student_name2,a.*
            |      from

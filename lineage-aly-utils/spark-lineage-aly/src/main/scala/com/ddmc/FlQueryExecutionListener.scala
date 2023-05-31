@@ -16,7 +16,7 @@ import scala.collection.mutable
 import scala.util.control.NonFatal
 
 /**
- * auth:zhangmengyuan
+ * auth:chenbiao
  * 手动获取解析计划为 explain extended
  * 该方法为通过解析逻辑执行计划获取字段间的血缘关系
  *
@@ -62,7 +62,17 @@ class FlQueryExecutionListener extends QueryExecutionListener with Logging {
   //  qe: QueryExecution
   def lineageParser(qe: QueryExecution): Unit = {
     val columnToColumns: mutable.Map[Column, mutable.Set[Column]] = lineageParserPlan(qe.analyzed)
-    print(columnToColumns.toString())
+    println("|--------------------------------------------------------------|")
+    println("|-------------------------字段血缘关系解析结果---------------------|")
+    println("|--------------------------------------------------------------|")
+    columnToColumns.keySet.foreach(target=>{
+      val source: mutable.Set[Column] = columnToColumns.get(target).get
+      println(s"|【target column】:\n|\t $target")
+      println(s"|【source column】:")
+      source.foreach(e=>println(s"|\t$e"))
+      println("---------------------------------------------------------------")
+    })
+    println("<---------------------------------------------------------------->")
 
   }
 

@@ -157,10 +157,7 @@ public class LineageData {
 
         @Override
         public String toString() {
-            return "Column{" +
-                    "id=" + id +
-                    ", columnId='" + columnId + '\'' +
-                    '}';
+            return table+"."+columnName;
         }
 
         public Column(int id, ColumnType columnType, String columnId, String dataBase, String table,String columnName) {
