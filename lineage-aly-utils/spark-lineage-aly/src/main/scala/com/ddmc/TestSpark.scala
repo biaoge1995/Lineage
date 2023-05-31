@@ -13,7 +13,7 @@ object TestSpark {
   def main(args: Array[String]): Unit = {
       val sparkSession = SparkSession.builder()
 //        .config("hive.metastore.uris", "thrift://cdh2:9083")
-        .config("spark.sql.queryExecutionListeners","com.ddmc.FlQueryExecutionListener" )
+//        .config("spark.sql.queryExecutionListeners","com.ddmc.FlQueryExecutionListener" )
 //        .master("local[*]")
         .enableHiveSupport()
         .getOrCreate()
