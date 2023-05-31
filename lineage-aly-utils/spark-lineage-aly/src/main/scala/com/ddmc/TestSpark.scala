@@ -12,9 +12,9 @@ object TestSpark {
 
   def main(args: Array[String]): Unit = {
       val sparkSession = SparkSession.builder()
-        .config("hive.metastore.uris", "thrift://localhost:9083")
+//        .config("hive.metastore.uris", "thrift://localhost:9083")
         .config("spark.sql.queryExecutionListeners","com.ddmc.FlQueryExecutionListener" )
-        .master("local[*]")
+//        .master("local[*]")
         .enableHiveSupport()
         .getOrCreate()
     val sql ="""
@@ -28,8 +28,8 @@ object TestSpark {
            |      ,c.store_name
            |      ,b.score
            |      ,id,name
-           |      from student a
-           |      left join score b
+           |      from test.student a
+           |      left join test.score b
            |       ON a.id = b.student_id
            |      inner join dim.store c
            |       ON a.id = c.store_id
@@ -39,7 +39,7 @@ object TestSpark {
            |      left join dim.product_hive b
            |       ON a.id = b.product_id
            |      ) t
-           |      group by 1
+           |      group by student_name2
            |""".stripMargin
 
     sparkSession.sql(sql)
