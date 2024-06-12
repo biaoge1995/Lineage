@@ -61,6 +61,10 @@ class FlQueryExecutionListener extends QueryExecutionListener with Logging {
 
   //  qe: QueryExecution
   def lineageParser(qe: QueryExecution): Unit = {
+    println("|--------------------------------------------------------------|")
+    println("|---------------------------sql text---------------------------|")
+    println("|--------------------------------------------------------------|")
+    println(qe.sparkPlan.origin.sqlText)
     val columnToColumns: mutable.Map[Column, mutable.Set[Column]] = lineageParserPlan(qe.analyzed)
     println("|--------------------------------------------------------------|")
     println("|---------------column lineage parse result--------------------|")

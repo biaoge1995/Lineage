@@ -12,36 +12,36 @@ object TestSpark {
 
   def main(args: Array[String]): Unit = {
       val sparkSession = SparkSession.builder()
-//        .config("hive.metastore.uris", "thrift://cdh2:9083")
-//        .config("spark.sql.queryExecutionListeners","com.ddmc.FlQueryExecutionListener" )
-//        .master("local[*]")
+        .config("hive.metastore.uris", "thrift://localhost:9083")
+        .config("spark.sql.queryExecutionListeners","com.ddmc.FlQueryExecutionListener" )
+        .master("local[*]")
         .enableHiveSupport()
         .getOrCreate()
-    val sql ="""
-           |INSERT overwrite TABLE dwd.student4
-           |select student_name2
-           |,count(student_name) as cnt
-           |      from
-           |      (select concat(student_name,'-',b.product_Id) as student_name2,a.*
-           |      from
-           |      (select
-           |      if(id='1',id,concat(student_id,'-',name)) as student_name
-           |      ,c.store_name
-           |      ,b.score
-           |      ,id,name
-           |      from test.student a
-           |      left join test.score b
-           |       ON a.id = b.student_id
-           |      inner join dim.store c
-           |       ON a.id = c.store_id
-           |       and c.snapshot = '2023-04-25'
-           |      where name='chenbiao'
-           |      ) a
-           |      left join dim.product_hive b
-           |       ON a.id = b.product_id
-           |      ) t
-           |      group by student_name2
-           |""".stripMargin
+    val sql =
+      """
+        |create table if not exists dwd.student4 as
+        |select student_name2,count(student_name) as cnt
+        |      from
+        |      (select concat(student_name,'-',b.product_Id) as student_name2,a.*
+        |      from
+        |      (select
+        |      if(id='1',id,concat(student_id,'-',name)) as student_name
+        |      ,c.store_name
+        |      ,b.score
+        |      ,id,name
+        |      from student a
+        |      left join score b
+        |       ON a.id = b.student_id
+        |      inner join dim.store c
+        |       ON a.id = c.store_id
+        |       and c.snapshot = '2023-04-25'
+        |      where name='chenbiao'
+        |      ) a
+        |      left join dim.product_hive b
+        |       ON a.id = b.product_id
+        |      ) t
+        |      group by 1
+        |""".stripMargin
 
     sparkSession.sql(sql)
 
