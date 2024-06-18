@@ -19,7 +19,6 @@ object TestSpark {
         .getOrCreate()
     val sql =
       """
-        |create table if not exists dwd.student4 as
         |select student_name2,count(student_name) as cnt
         |      from
         |      (select concat(student_name,'-',b.product_Id) as student_name2,a.*
@@ -43,7 +42,7 @@ object TestSpark {
         |      group by 1
         |""".stripMargin
 
-    sparkSession.sql(sql)
+    sparkSession.sql(sql).collect();
 
 //    val linage = new SparkLinage(sparkSession)
 //    val data: LineageData = linage.getLineAgeData(sql)
